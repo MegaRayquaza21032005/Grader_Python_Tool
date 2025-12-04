@@ -4,6 +4,8 @@ Hệ thống chấm điểm được thiết kế để kiểm tra và đánh gi
 
 ## 1. Cấu trúc thư mục
 Hệ thống yêu cầu cấu trúc thư mục như sau:
+- **Description.md**: File mô tả yêu cầu và hướng dẫn cho từng bài tập.
+- **Data/**: Chứa các dữ liệu cần thiết cho bài tập (ví dụ: `tips.json`, `titanic.csv`, ...).
 - **Input/**: Chứa các file đầu vào cho từng bài tập.
   - Ví dụ: `Input/Tips3/1.in`, `Input/Tips3/2.in`, ...
 - **Output/**: Chứa các file đầu ra mong muốn tương ứng với từng bài tập.
