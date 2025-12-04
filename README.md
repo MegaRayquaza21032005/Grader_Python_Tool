@@ -11,7 +11,6 @@ Hệ thống yêu cầu cấu trúc thư mục như sau:
 - **grader.py**: File chính để chạy hệ thống chấm điểm.
 
 ## 2. Cách chạy hệ thống
-
 1. Chạy môi trường ảo có sẵn trong thư mục `venv`:
    ```bash
    source venv/bin/activate
