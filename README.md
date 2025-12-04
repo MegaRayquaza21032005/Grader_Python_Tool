@@ -23,8 +23,10 @@ Hệ thống yêu cầu cấu trúc thư mục như sau:
         ```bash
         cd /home/ngtukien/Documents/D23CT01_Python/Tools
         ```
+3. Viết code của bạn vào folder Code với đề bài là tên bài tập tương ứng (không phân biệt hoa thường).
+    - Ví dụ: Để làm bài tập `Flight Year`, tạo file `Code/Flight_Year.py` và viết code vào đó. 
 
-3. Chạy lệnh sau để chấm điểm cho một bài tập cụ thể:
+4. Chạy lệnh sau để chấm điểm cho một bài tập cụ thể:
    ```bash
    python3 grader.py <Tên_Bài_Tập>
    ```
@@ -33,7 +35,7 @@ Hệ thống yêu cầu cấu trúc thư mục như sau:
         python3 grader.py Tips3
         ```
 
-3. Kết quả sẽ được hiển thị trên terminal, bao gồm số lượng test case đúng và sai.
+5. Kết quả sẽ được hiển thị trên terminal, bao gồm số lượng test case đúng và sai.
 
 ## 3. Lưu ý
 - Đảm bảo các file đầu vào và đầu ra được đặt đúng thư mục và đúng định dạng.
