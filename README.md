@@ -12,12 +12,18 @@ Hệ thống yêu cầu cấu trúc thư mục như sau:
 
 ## 2. Cách chạy hệ thống
 
-1. Mở terminal và điều hướng đến thư mục chứa file `grader.py`:
+1. Chạy muôn trường biên dịch cho Python 3:
+   ```bash
+   source venv/bin/activate
+   ```
+
+2. Mở terminal và điều hướng đến thư mục chứa file `grader.py`:
+    Ví dụ:
    ```bash
    cd /home/ngtukien/Documents/D23CT01_Python/Tools
    ```
 
-2. Chạy lệnh sau để chấm điểm cho một bài tập cụ thể:
+3. Chạy lệnh sau để chấm điểm cho một bài tập cụ thể:
    ```bash
    python3 grader.py <Tên_Bài_Tập>
    ```
