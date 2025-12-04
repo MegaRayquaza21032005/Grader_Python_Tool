@@ -12,25 +12,25 @@ Hệ thống yêu cầu cấu trúc thư mục như sau:
 
 ## 2. Cách chạy hệ thống
 
-1. Chạy muôn trường biên dịch cho Python 3:
+1. Chạy môi trường ảo có sẵn trong thư mục `venv`:
    ```bash
    source venv/bin/activate
    ```
 
 2. Mở terminal và điều hướng đến thư mục chứa file `grader.py`:
-    Ví dụ:
-   ```bash
-   cd /home/ngtukien/Documents/D23CT01_Python/Tools
-   ```
+    - Ví dụ:
+        ```bash
+        cd /home/ngtukien/Documents/D23CT01_Python/Tools
+        ```
 
 3. Chạy lệnh sau để chấm điểm cho một bài tập cụ thể:
    ```bash
    python3 grader.py <Tên_Bài_Tập>
    ```
    - Ví dụ: Để chấm bài tập `Tips3`, chạy lệnh:
-     ```bash
-     python3 grader.py Tips3
-     ```
+        ```bash
+        python3 grader.py Tips3
+        ```
 
 3. Kết quả sẽ được hiển thị trên terminal, bao gồm số lượng test case đúng và sai.
 
@@ -40,4 +40,5 @@ Hệ thống yêu cầu cấu trúc thư mục như sau:
 - Nếu có lỗi, kiểm tra lại logic trong bài làm hoặc cấu trúc thư mục.
 
 ## 4. Thông tin thêm
-- Mọi thắc mắc hoặc góp ý, vui lòng liên hệ qua email của người quản lý hệ thống.
+- Nên `fork` repository này để lưu trữ và quản lý bài làm của bạn, sau đó `clone` về máy cá nhân để làm việc.
+- Nếu có lỗi, hãy mở `pull request` để đóng góp sửa lỗi cho hệ thống.
