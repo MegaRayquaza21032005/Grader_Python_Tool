@@ -25,7 +25,7 @@ def main():
                 count += 1
         if count > 0:
             avg = total / count
-            # print(f"{avg:.4f}")
+            print(f"{avg:.4f}")
         else:
             print('Invalid')
 
