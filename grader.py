@@ -3,22 +3,33 @@ import subprocess
 import sys
 import glob
 
-class Colors:
-    PASS = '\033[92m'
-    FAIL = '\033[91m'
-    WARN = '\033[93m'
-    RESET = '\033[0m'
+# =================================================================
+# 1. Cấu hình & Hằng số
+# =================================================================
 
-# Cấu hình đường dẫn
+class Colors:
+    """Định nghĩa mã màu ANSI cho output terminal."""
+    PASS = '\033[92m'  # Xanh lá
+    FAIL = '\033[91m'  # Đỏ
+    WARN = '\033[93m'  # Vàng
+    RESET = '\033[0m' # Reset về màu mặc định
+
+# Định nghĩa các đường dẫn quan trọng trong cấu trúc thư mục
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_DIR = os.path.join(BASE_DIR, 'Input')
 OUTPUT_DIR = os.path.join(BASE_DIR, 'Output')
-CODE_DIR = os.path.join(BASE_DIR, 'Code')  # <--- Thư mục chứa code của user
+CODE_DIR = os.path.join(BASE_DIR, 'Code')  # Thư mục chứa bài làm của user
+
+# =================================================================
+# 2. Các hàm tiện ích
+# =================================================================
 
 def find_script_file(problem_name):
     """
-    Tìm file python trong thư mục Code/
+    Tìm file python tương ứng với tên bài trong thư mục Code/.
+    Ưu tiên tìm kiếm linh hoạt: [Tên_Bài].py, [tên_bài].py, [tênbài].py
     """
+    # Tạo các tên file tiềm năng từ tên thư mục bài toán
     possible_names = [
         f"{problem_name}.py",
         f"{problem_name.lower()}.py",
@@ -33,38 +44,53 @@ def find_script_file(problem_name):
     return None
 
 def run_test_case(script_path, input_file, expected_output_file):
+    """
+    Thực thi script của user với input và so sánh output.
+    """
+    # Đọc input từ file .in
     with open(input_file, 'r', encoding='utf-8') as f:
         input_data = f.read()
 
+    # Kiểm tra file output kỳ vọng (.out)
     if not os.path.exists(expected_output_file):
         return False, "Missing .out file", ""
 
+    # Đọc output kỳ vọng từ file .out (loại bỏ khoảng trắng thừa)
     with open(expected_output_file, 'r', encoding='utf-8') as f:
         expected_output = f.read().strip()
 
     try:
+        # Chạy script của user bằng subprocess
         process = subprocess.run(
-            [sys.executable, script_path],
+            [sys.executable, script_path], # sys.executable đảm bảo dùng đúng interpreter
             input=input_data,
             capture_output=True,
             text=True,
-            # Giữ cwd là BASE_DIR để script trong folder Code 
-            # vẫn đọc được folder Data ở root (vd: open('Data/tips.json'))
+            # CWD là BASE_DIR (thư mục Tools) để script user đọc được Data/
             cwd=BASE_DIR 
         )
 
+        # Xử lý lỗi Runtime (Return code khác 0)
         if process.returncode != 0:
-            return False, f"Runtime Error: {process.stderr.strip()}", expected_output
+            error_details = process.stderr.strip() if process.stderr else "Unknown error"
+            return False, f"Runtime Error: {error_details}", expected_output
 
+        # Lấy output thực tế và loại bỏ khoảng trắng thừa
         actual_output = process.stdout.strip()
 
+        # So sánh output
         if actual_output == expected_output:
             return True, actual_output, expected_output
         else:
             return False, actual_output, expected_output
             
     except Exception as e:
+        # Xử lý các lỗi hệ thống hoặc lỗi khác (ví dụ: file không chạy được)
         return False, f"System Error: {str(e)}", ""
+
+# =================================================================
+# 3. Hàm Main (Quản lý chấm bài)
+# =================================================================
 
 def main():
     print(f"{'='*30} AUTO GRADER {'='*30}")
@@ -84,16 +110,14 @@ def main():
         print("   Vui lòng tạo thư mục 'Code' và đặt file bài làm vào đó.")
         return
 
-    # Nếu có tham số → chỉ chấm bài đó
+    # Xác định danh sách các bài toán cần chấm
     if target_problem:
-        # Kiểm tra xem folder bài đó có tồn tại trong Input không
         if os.path.isdir(os.path.join(INPUT_DIR, target_problem)):
              problems = [target_problem]
         else:
              print(f"❌ Không tìm thấy bài '{target_problem}' trong thư mục Input.")
              return
     else:
-        # Nếu không → chấm tất cả bài có trong folder Input
         problems = [d for d in os.listdir(INPUT_DIR) if os.path.isdir(os.path.join(INPUT_DIR, d))]
 
     for problem in problems:
@@ -124,11 +148,22 @@ def main():
                 print(f"   ✅ Test {test_name}: {Colors.PASS}PASSED{Colors.RESET}")
                 passed_tests += 1
             else:
+                # --- PHẦN ĐÃ ĐƯỢC CHỈNH SỬA ĐỂ CĂN LỀ ĐẸP HƠN ---
                 print(f"   ❌ Test {test_name}: {Colors.FAIL}FAILED{Colors.RESET}")
-                print(f"      Expected: {expected}")
-                print(f"      Got     : {actual}")
+                
+                # Căn lề cho Expected Output
+                print("      Expected:")
+                # Thay thế ký tự xuống dòng bằng ký tự xuống dòng kèm căn lề mới
+                formatted_expected = expected.replace('\n', '\n               ') 
+                print(f"               {formatted_expected}") 
 
-        print(f"   >> Kết quả: {passed_tests}/{total_tests} test cases.")
+                # Căn lề cho Actual Output (Got)
+                print("      Got     :")
+                formatted_actual = actual.replace('\n', '\n               ')
+                print(f"               {formatted_actual}")
+                # ---------------------------------------------------
+
+        print(f"   >> Tổng kết: {passed_tests}/{total_tests} test cases.")
 
 if __name__ == "__main__":
     main()
