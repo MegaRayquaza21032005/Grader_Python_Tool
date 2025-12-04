@@ -53,7 +53,7 @@ Tips là dữ liệu về tiền bo (tips) cho nhà hàng bao gồm danh sách c
 | :--- | :--- |
 | 2<br>Sun 2<br>Fri 10 | 17.5600<br>Invalid |
 ___
-# Flight Year
+# Flight_year
 Dữ liệu về chuyến bay được lưu trữ trong tệp "flights.json" có cấu trúc từ điển lồng nhau bao gồm:
 
   * Ngoài cùng là từ điển có khóa là `flights`.
